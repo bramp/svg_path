@@ -55,7 +55,7 @@ class SvgClose extends SvgCommand {
   operator ==(Object other) => other is SvgClose;
 
   @override
-  int get hashCode => 0;
+  int get hashCode => runtimeType.hashCode;
 }
 
 class SvgMoveTo extends SvgCommand {

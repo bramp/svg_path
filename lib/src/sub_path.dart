@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
 import 'math.dart';
@@ -104,6 +105,13 @@ class SubPath implements Operations<SubPath> {
 
     return SubPath(reversed);
   }
+
+  @override
+  operator ==(Object other) =>
+      other is SubPath && ListEquality().equals(segments, other.segments);
+
+  @override
+  int get hashCode => Object.hashAll(segments);
 
   /// Returns the SubPath as a valid SVG path string.
   @override

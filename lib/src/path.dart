@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:path_parsing/path_parsing.dart';
 import 'package:svg_path/src/math.dart';
@@ -10,6 +11,8 @@ class Path implements Operations<Path> {
   final List<SubPath> subPaths;
 
   Path(List<SubPath> subPaths) : subPaths = List.unmodifiable(subPaths);
+
+  const Path.empty() : subPaths = const [];
 
   factory Path.fromString(String path) {
     final SvgPathStringSource parser = SvgPathStringSource(path);
@@ -84,4 +87,8 @@ class Path implements Operations<Path> {
   String toString() {
     return subPaths.map((s) => s.toString()).join(' ');
   }
+
+  @override
+  operator ==(Object other) =>
+      other is Path && ListEquality().equals(subPaths, other.subPaths);
 }
