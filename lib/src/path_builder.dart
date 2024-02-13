@@ -1,6 +1,8 @@
+import 'package:meta/meta.dart';
 import 'package:path_parsing/path_parsing.dart';
+import 'package:svg_path/src/path.dart';
 
-import 'path.dart';
+import 'sub_path.dart';
 import 'svg_command.dart';
 
 class PathBuilder implements PathProxy {
@@ -29,7 +31,22 @@ class PathBuilder implements PathProxy {
     segments.add(SvgMoveTo(x, y));
   }
 
+  @useResult
   Path finished() {
-    return Path(segments);
+    final paths = <SubPath>[];
+    int last = 0;
+
+    for (int i = 0; i < segments.length; i++) {
+      if (segments[i] is SvgClose) {
+        paths.add(SubPath(segments.sublist(last, i + 1)));
+        last = i + 1;
+      }
+    }
+
+    if (last < segments.length) {
+      paths.add(SubPath(segments.sublist(last)));
+    }
+
+    return Path(paths);
   }
 }

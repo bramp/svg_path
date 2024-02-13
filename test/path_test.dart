@@ -1,10 +1,26 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:svg_path/src/path.dart';
 import 'package:svg_path/svg_path.dart';
 import 'package:test/test.dart';
 
 void main() {
+  group('Path.fromString() handles subpaths', () {
+    final tests = [
+      ('M10 10', 1),
+      ('M10 10 Z', 1),
+      ('M10 10 Z L 1 1', 2),
+      ('M10 10 Z L 1 1 Z', 2)
+    ];
+
+    for (final t in tests) {
+      test(t.$1, () {
+        expect(Path.fromString(t.$1).subPaths.length, t.$2);
+      });
+    }
+  });
+
   group('Path.fromString', () {
     // Taken from https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
     final tests = [

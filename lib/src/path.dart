@@ -1,34 +1,15 @@
 import 'package:meta/meta.dart';
 import 'package:path_parsing/path_parsing.dart';
+import 'package:svg_path/src/math.dart';
+import 'package:svg_path/src/operation.dart';
+import 'package:svg_path/src/path_builder.dart';
+import 'package:svg_path/src/sub_path.dart';
 
-import 'math.dart';
-import 'operation.dart';
-import 'path_builder.dart';
-import 'svg_command.dart';
-
-/// A sequence of SVG commands making up a path.
-// TODO Rename to SubPath (as that's strictly what it is).
 @immutable
 class Path implements Operations<Path> {
-  final List<SvgCommand> segments;
+  final List<SubPath> subPaths;
 
-  Path(List<SvgCommand> segments) : segments = List.unmodifiable(segments) {
-    if (segments.first is! SvgMoveTo) {
-      throw UnimplementedError(
-          'Sorry we only support paths that start with a move to command.');
-    }
-
-    if (segments.contains(SvgClose())) {
-      if (segments.last is! SvgClose) {
-        throw StateError('If there is a close path it must be last');
-      }
-
-      if (segments.whereType<SvgClose>().length > 1) {
-        throw UnimplementedError(
-            'Sorry we only support a single sub path. (That is a path with a single close path command.)');
-      }
-    }
-  }
+  Path(List<SubPath> subPaths) : subPaths = List.unmodifiable(subPaths);
 
   factory Path.fromString(String path) {
     final SvgPathStringSource parser = SvgPathStringSource(path);
@@ -43,86 +24,64 @@ class Path implements Operations<Path> {
     return builder.finished();
   }
 
-  bool get isClosed => segments.contains(SvgClose());
-
-  /// Returns a new Path translated by x and y.
-  @override
-  Path translate(num x, num y) {
-    return Path(segments.map((p) => p.translate(x, y)).toList());
+  /// Creates a path that represents a circle at ([cx], [cy]) with radius [r].
+  /// That is a path made up for two 180 degree arcs.
+  factory Path.fromCircle(double cx, double cy, double r) {
+    // https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
+    return Path.fromString(
+      'M${cx - r},$cy '
+      'a$r,$r 0 1,0 ${r * 2},0 '
+      'a$r,$r 0 1,0 -${r * 2},0 '
+      'Z',
+    );
   }
 
-  /// Rotate this [angle] radians around [centerX],[centerY].
+  /// Creates a path that represents a ellipse at ([cx], [cy]) with radius [rx]
+  /// and [ry].
+  /// That is a path made up for two 180 degree arcs.
+  factory Path.fromEllipse(double cx, double cy, double rx, double ry) {
+    return Path.fromString(
+      'M${cx - rx},$cy '
+      'a$rx,$ry 0 1,0 ${rx * 2},0 '
+      'a$rx,$ry 0 1,0 -${rx * 2},0 '
+      'Z',
+    );
+  }
+
+  @override
+  Path mirror(Axis axis, [double centerX = 0.0, double centerY = 0.0]) {
+    return Path(subPaths.map((p) => p.mirror(axis, centerX, centerY)).toList());
+  }
+
   @override
   Path rotate(angle, [double centerX = 0.0, double centerY = 0.0]) {
     return Path(
-        segments.map((p) => p.rotate(angle, centerX, centerY)).toList());
+        subPaths.map((p) => p.rotate(angle, centerX, centerY)).toList());
   }
 
-  /// Mirrors the [T] over vertical or horizontal line that goes though [centerX],[centerY].
-  // TODO Support mirroring over a arbitrary line.
   @override
-  Path mirror(Axis axis, [double centerX = 0.0, double centerY = 0.0]) {
-    return Path(segments.map((p) => p.mirror(axis, centerX, centerY)).toList());
+  Path translate(num x, num y) {
+    return Path(subPaths.map((p) => p.translate(x, y)).toList());
   }
 
-  /// Returns a new Path with the segments in reverse order.
   Path reverse() {
-    if (segments.length <= 1) {
-      return this;
-    }
+    return Path(subPaths.reversed.map((p) => p.reverse()).toList());
+  }
 
-    List<SvgCommand> reversed = [];
-
-    // In reverse order, find where each previous point ends
-    // and create the same command but going to that last point.
-    for (int i = segments.length - 1; i > 0; i--) {
-      final SvgCommand segment = segments[i];
-
-      if (segment is SvgClose) {
-        // Skip this.
-        continue;
-      }
-
-      if (reversed.isEmpty) {
-        final end = segment.end;
-        reversed.add(SvgMoveTo(end.$1, end.$2));
-      }
-
-      final prevEnd = segments[i - 1].end;
-      switch (segment) {
-        case SvgMoveTo():
-          reversed.add(SvgMoveTo(prevEnd.$1, prevEnd.$2));
-          break;
-        case SvgLineTo():
-          reversed.add(SvgLineTo(prevEnd.$1, prevEnd.$2));
-          break;
-        case SvgCubicTo():
-          // TODO Do I need to change control points?
-          reversed.add(SvgCubicTo(
-            segment.x2, segment.y2, //
-            segment.x1, segment.y1, //
-            prevEnd.$1, prevEnd.$2, //
-          ));
-          break;
-        case SvgClose():
-          throw UnimplementedError(
-              'Should not be possible to have a close command in the middle of a path.');
-      }
-    }
-
-    if (isClosed) {
-      reversed.add(SvgClose());
-    }
-
-    assert(segments.length == reversed.length,
-        'Expected reverse path to have the same number of segments.');
-
-    return Path(reversed);
+  /// Joins two paths together. e.g
+  /// ```
+  /// final a = Path.fromString('M0,0 L1,1 Z')
+  /// final b = Path.fromString('M2,2 L3,3 Z');
+  /// final c = a.join(b);
+  /// // c == Path.fromString('M0,0 L1,1 Z   M2,2 L3,3 Z');
+  /// ```
+  Path concat(Path other) {
+    return Path([...subPaths, ...other.subPaths]);
   }
 
   /// Returns the Path as a valid SVG path string.
   @override
   String toString() {
-    return segments.map((s) => s.toString()).join(' ');
+    return subPaths.map((s) => s.toString()).join(' ');
   }
 }
