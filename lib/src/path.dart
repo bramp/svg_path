@@ -51,6 +51,8 @@ class Path implements Operations<Path> {
     );
   }
 
+  get length => subPaths.map((p) => p.length).sum;
+
   @override
   Path mirror(Axis axis, [double centerX = 0.0, double centerY = 0.0]) {
     return Path(subPaths.map((p) => p.mirror(axis, centerX, centerY)).toList());

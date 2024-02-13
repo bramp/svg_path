@@ -27,7 +27,8 @@ class SubPath implements Operations<SubPath> {
     }
   }
 
-  bool get isClosed => segments.contains(SvgClose());
+  bool get isClosed => segments.last is SvgClose;
+  int get length => segments.length;
 
   /// Returns a new Path translated by x and y.
   @override
