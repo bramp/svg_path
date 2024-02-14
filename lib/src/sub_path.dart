@@ -112,7 +112,7 @@ class SubPath implements Operations<SubPath> {
       other is SubPath && ListEquality().equals(segments, other.segments);
 
   @override
-  int get hashCode => Object.hashAll(segments);
+  int get hashCode => ListEquality().hash(segments);
 
   /// Returns the SubPath as a valid SVG path string.
   @override
