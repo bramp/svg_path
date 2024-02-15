@@ -52,7 +52,7 @@ class SvgClose extends SvgCommand {
       throw StateError('SvgClose end point, is the subpath\'s initial point.');
 
   @override
-  operator ==(Object other) => other is SvgClose;
+  bool operator ==(Object other) => other is SvgClose;
 
   @override
   int get hashCode => runtimeType.hashCode;
@@ -90,7 +90,7 @@ class SvgMoveTo extends SvgCommand {
   (double, double) get end => (x, y);
 
   @override
-  operator ==(Object other) =>
+  bool operator ==(Object other) =>
       other is SvgMoveTo && other.x == x && other.y == y;
 
   @override
@@ -129,7 +129,7 @@ class SvgLineTo extends SvgCommand {
   (double, double) get end => (x, y);
 
   @override
-  operator ==(Object other) =>
+  bool operator ==(Object other) =>
       other is SvgLineTo && other.x == x && other.y == y;
 
   @override
@@ -189,7 +189,7 @@ class SvgCubicTo extends SvgCommand {
   (double, double) get end => (x3, y3);
 
   @override
-  operator ==(Object other) =>
+  bool operator ==(Object other) =>
       other is SvgCubicTo &&
       other.x1 == x1 &&
       other.y1 == y1 &&

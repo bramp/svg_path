@@ -108,7 +108,7 @@ class SubPath implements Operations<SubPath> {
   }
 
   @override
-  operator ==(Object other) =>
+  bool operator ==(Object other) =>
       other is SubPath && ListEquality().equals(segments, other.segments);
 
   @override

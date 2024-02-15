@@ -91,7 +91,7 @@ class Path implements Operations<Path> {
   }
 
   @override
-  operator ==(Object other) =>
+  bool operator ==(Object other) =>
       other is Path && ListEquality().equals(subPaths, other.subPaths);
 
   @override
