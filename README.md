@@ -1,7 +1,7 @@
 Pure dart library for parsing and manipulating SVG paths.
 
-[![Pub package](https://img.shields.io/pub/v/svg_path.svg)](https://pub.dev/packages/binpack)
-[![Pub publisher](https://img.shields.io/pub/publisher/svg_path.svg)](https://pub.dev/publishers/bramp.net/packages)
+[![Pub package](https://img.shields.io/pub/v/svg_path_transform.svg)](https://pub.dev/packages/svg_path_transform)
+[![Pub publisher](https://img.shields.io/pub/publisher/svg_path_transform.svg)](https://pub.dev/publishers/bramp.net/packages)
 [![Dart Analysis](https://github.com/bramp/svg_path/actions/workflows/dart.yml/badge.svg)](https://github.com/bramp/svg_path/actions/workflows/dart.yml)
 
 ## Features
@@ -16,7 +16,12 @@ Does not depend on [Flutter](https://api.flutter.dev/index.html) or [dart:ui](ht
 
 ## Usage
 
+```shell
+dart pub add svg_path_transform
+```
+
 ```dart
+import 'package:svg_path_transform/svg_path_transform.dart';
 
 void main() {
   // Read a path from a SVG path string.
