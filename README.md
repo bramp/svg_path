@@ -1,14 +1,18 @@
-## Features
-
 Pure dart library for parsing and manipulating SVG paths.
 
-* Parse
-* Translate
-* Rotate
-* Mirror
+[![Pub package](https://img.shields.io/pub/v/svg_path.svg)](https://pub.dev/packages/binpack)
+[![Pub publisher](https://img.shields.io/pub/publisher/svg_path.svg)](https://pub.dev/publishers/bramp.net/packages)
+[![Dart Analysis](https://github.com/bramp/svg_path/actions/workflows/dart.yml/badge.svg)](https://github.com/bramp/svg_path/actions/workflows/dart.yml)
+
+## Features
+
+* Parse a SVG path
+* Translate the path
+* Rotate the path around a point
+* Mirror the path across an axis
 * Reverse (e.g clockwise to counter-clockwise)
 
-Does not depend on Flutter/dart:ui, but these Path objects can easily be converted to dart:ui [Path objects](https://api.flutter.dev/flutter/dart-ui/Path-class.html).
+Does not depend on [Flutter](https://api.flutter.dev/index.html) or [dart:ui](https://api.flutter.dev/flutter/dart-ui/dart-ui-library.html), but these Path objects can easily be converted to dart:ui [Path objects](https://api.flutter.dev/flutter/dart-ui/Path-class.html).
 
 ## Usage
 

@@ -1,0 +1,23 @@
+# To test this workflow, you can use the following command:
+# act -j build -s GITHUB_TOKEN="$(gh auth token)" --container-architecture linux/amd64
+name: Dart
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Run tests
+        run: dart test
+
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: dart analyze
