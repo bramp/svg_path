@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:svg_path/src/operation.dart';
+import 'package:svg_path_transform/src/operation.dart';
 
 import 'math.dart';
 

@@ -1,4 +1,4 @@
-name: svg_path
+name: svg_path_transform
 description: Library for manipulating SVG paths
 version: 1.1.0
 repository: https://github.com/bramp/svg_path

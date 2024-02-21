@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:svg_path/svg_path.dart';
+import 'package:svg_path_transform/svg_path_transform.dart';
 
 void main() {
   // Read a path from a SVG path string.

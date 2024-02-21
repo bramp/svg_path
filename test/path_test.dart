@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:svg_path/src/path.dart';
-import 'package:svg_path/svg_path.dart';
+import 'package:svg_path_transform/svg_path_transform.dart';
 import 'package:test/test.dart';
 
 void main() {

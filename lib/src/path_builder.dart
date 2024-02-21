@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:path_parsing/path_parsing.dart';
-import 'package:svg_path/src/path.dart';
+import 'package:svg_path_transform/src/path.dart';
 
 import 'sub_path.dart';
 import 'svg_command.dart';
