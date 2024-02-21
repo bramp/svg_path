@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Lint improvements
+
 ## 1.1.0
 
 - Added support for subpaths.
