@@ -1,5 +1,5 @@
 name: svg_path_transform
-description: Library for manipulating SVG paths
+description: Pure dart library for parsing and manipulating SVG paths, such as rotating, translating, etc.
 version: 1.1.0
 repository: https://github.com/bramp/svg_path
 

@@ -467,6 +467,7 @@ void main() {
   // TODO Write tests for mirror
 }
 
+// ignore: unreachable_from_main
 void writeTestsToHTML(List<(String, String)> tests, [String? transform]) {
   final f = File('tests.html').openWrite();
 

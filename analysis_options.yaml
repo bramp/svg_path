@@ -13,12 +13,45 @@
 
 include: package:lints/recommended.yaml
 
-# Uncomment the following section to specify additional rules.
+linter:
+  rules:
+    - avoid_print
 
-# linter:
-#   rules:
-#     - camel_case_types
+    # Faster code
+    - use_string_buffers
+    - avoid_dynamic_calls
 
+    # Safer code
+    - unawaited_futures
+    - use_rethrow_when_possible
+
+    # Consistent code
+    - prefer_single_quotes
+    - directives_ordering
+    - combinators_ordering
+    - prefer_const_constructors
+    - sort_pub_dependencies
+    - sort_constructors_first
+    - sort_unnamed_constructors_first
+    - use_to_and_as_if_applicable
+    - use_test_throws_matchers
+    - only_throw_errors
+
+    # Less code
+    - unnecessary_lambdas
+    - unnecessary_await_in_return
+    - prefer_expression_function_bodies
+
+    # Documented code
+    #- package_api_docs
+    #- public_member_api_docs
+    - type_annotate_public_apis
+
+    # Other
+    - use_setters_to_change_properties
+    - unreachable_from_main
+    - use_enums
+    - tighten_type_of_initializing_formals
 # analyzer:
 #   exclude:
 #     - path/to/excluded/files/**

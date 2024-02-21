@@ -10,7 +10,7 @@ class PathBuilder implements PathProxy {
 
   @override
   void close() {
-    segments.add(SvgClose());
+    segments.add(const SvgClose());
   }
 
   // Adds a cubic bezier segment that curves from the current point to the given

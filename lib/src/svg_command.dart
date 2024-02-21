@@ -28,24 +28,18 @@ class SvgClose extends SvgCommand {
   const SvgClose();
 
   @override
-  SvgClose translate(num x, num y) {
-    return this;
-  }
+  SvgClose translate(num x, num y) => this;
 
   @override
-  SvgClose rotate(angle, [double centerX = 0.0, double centerY = 0.0]) {
-    return this;
-  }
+  SvgClose rotate(double angle, [double centerX = 0.0, double centerY = 0.0]) =>
+      this;
 
   @override
-  SvgClose mirror(axis, [double centerX = 0.0, double centerY = 0.0]) {
-    return this;
-  }
+  SvgClose mirror(Axis axis, [double centerX = 0.0, double centerY = 0.0]) =>
+      this;
 
   @override
-  String toString() {
-    return 'Z';
-  }
+  String toString() => 'Z';
 
   @override
   (double, double) get end =>
@@ -65,12 +59,10 @@ class SvgMoveTo extends SvgCommand {
   final double y;
 
   @override
-  SvgMoveTo translate(num x, num y) {
-    return SvgMoveTo(this.x + x, this.y + y);
-  }
+  SvgMoveTo translate(num x, num y) => SvgMoveTo(this.x + x, this.y + y);
 
   @override
-  SvgMoveTo rotate(angle, [double centerX = 0.0, double centerY = 0.0]) {
+  SvgMoveTo rotate(double angle, [double centerX = 0.0, double centerY = 0.0]) {
     final (x, y) = rotatePoint(this.x, this.y, angle, centerX, centerY);
     return SvgMoveTo(x, y);
   }
@@ -82,9 +74,7 @@ class SvgMoveTo extends SvgCommand {
   }
 
   @override
-  String toString() {
-    return 'M ${formatNumber(x)} ${formatNumber(y)}';
-  }
+  String toString() => 'M ${formatNumber(x)} ${formatNumber(y)}';
 
   @override
   (double, double) get end => (x, y);
@@ -104,12 +94,10 @@ class SvgLineTo extends SvgCommand {
   final double y;
 
   @override
-  SvgLineTo translate(num x, num y) {
-    return SvgLineTo(this.x + x, this.y + y);
-  }
+  SvgLineTo translate(num x, num y) => SvgLineTo(this.x + x, this.y + y);
 
   @override
-  SvgLineTo rotate(angle, [double centerX = 0.0, double centerY = 0.0]) {
+  SvgLineTo rotate(double angle, [double centerX = 0.0, double centerY = 0.0]) {
     final (x, y) = rotatePoint(this.x, this.y, angle, centerX, centerY);
     return SvgLineTo(x, y);
   }
@@ -121,9 +109,7 @@ class SvgLineTo extends SvgCommand {
   }
 
   @override
-  String toString() {
-    return 'L ${formatNumber(x)} ${formatNumber(y)}';
-  }
+  String toString() => 'L ${formatNumber(x)} ${formatNumber(y)}';
 
   @override
   (double, double) get end => (x, y);
@@ -151,16 +137,15 @@ class SvgCubicTo extends SvgCommand {
   final double y3;
 
   @override
-  SvgCubicTo translate(num x, num y) {
-    return SvgCubicTo(
-      x1 + x, y1 + y, // control point 1
-      x2 + x, y2 + y, // control point 2
-      x3 + x, y3 + y, // end point
-    );
-  }
+  SvgCubicTo translate(num x, num y) => SvgCubicTo(
+        x1 + x, y1 + y, // control point 1
+        x2 + x, y2 + y, // control point 2
+        x3 + x, y3 + y, // end point
+      );
 
   @override
-  SvgCubicTo rotate(angle, [double centerX = 0.0, double centerY = 0.0]) {
+  SvgCubicTo rotate(double angle,
+      [double centerX = 0.0, double centerY = 0.0]) {
     final (x1, y1) = rotatePoint(this.x1, this.y1, angle, centerX, centerY);
     final (x2, y2) = rotatePoint(this.x2, this.y2, angle, centerX, centerY);
     final (x3, y3) = rotatePoint(this.x3, this.y3, angle, centerX, centerY);
@@ -178,12 +163,10 @@ class SvgCubicTo extends SvgCommand {
   }
 
   @override
-  String toString() {
-    return 'C ' //
-        '${formatNumber(x1)} ${formatNumber(y1)}, ' //
-        '${formatNumber(x2)} ${formatNumber(y2)}, ' //
-        '${formatNumber(x3)} ${formatNumber(y3)}';
-  }
+  String toString() => 'C ' //
+      '${formatNumber(x1)} ${formatNumber(y1)}, ' //
+      '${formatNumber(x2)} ${formatNumber(y2)}, ' //
+      '${formatNumber(x3)} ${formatNumber(y3)}';
 
   @override
   (double, double) get end => (x3, y3);

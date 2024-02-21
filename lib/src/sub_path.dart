@@ -5,17 +5,17 @@ import 'math.dart';
 import 'operation.dart';
 import 'svg_command.dart';
 
-/// A sequence of SVG commands making up a path.
+/// A sequence of SVG commands making up a subpath.
 @immutable
 class SubPath implements Operations<SubPath> {
-  final List<SvgCommand> segments;
-
+  /// Creates the SubPath from a list of segments. The list must not be empty,
+  /// and if it has a ClosePath it must be the last segment.
   SubPath(List<SvgCommand> segments) : segments = List.unmodifiable(segments) {
     if (segments.isEmpty) {
       throw ArgumentError('A SubPath must have at least one segment');
     }
 
-    if (segments.contains(SvgClose())) {
+    if (segments.contains(const SvgClose())) {
       if (segments.last is! SvgClose) {
         throw StateError('If there is a ClosePath it must be last');
       }
@@ -26,30 +26,26 @@ class SubPath implements Operations<SubPath> {
       }
     }
   }
+  final List<SvgCommand> segments;
 
   bool get isClosed => segments.last is SvgClose;
   int get length => segments.length;
 
   /// Returns a new Path translated by x and y.
   @override
-  SubPath translate(num x, num y) {
-    return SubPath(segments.map((p) => p.translate(x, y)).toList());
-  }
+  SubPath translate(num x, num y) =>
+      SubPath(segments.map((p) => p.translate(x, y)).toList());
 
   /// Rotate this [angle] radians around [centerX],[centerY].
   @override
-  SubPath rotate(angle, [double centerX = 0.0, double centerY = 0.0]) {
-    return SubPath(
-        segments.map((p) => p.rotate(angle, centerX, centerY)).toList());
-  }
+  SubPath rotate(double angle, [double centerX = 0.0, double centerY = 0.0]) =>
+      SubPath(segments.map((p) => p.rotate(angle, centerX, centerY)).toList());
 
-  /// Mirrors the [T] over vertical or horizontal line that goes though [centerX],[centerY].
+  /// Mirrors this over vertical or horizontal [axis] that goes though [centerX],[centerY].
   // TODO Support mirroring over a arbitrary line.
   @override
-  SubPath mirror(Axis axis, [double centerX = 0.0, double centerY = 0.0]) {
-    return SubPath(
-        segments.map((p) => p.mirror(axis, centerX, centerY)).toList());
-  }
+  SubPath mirror(Axis axis, [double centerX = 0.0, double centerY = 0.0]) =>
+      SubPath(segments.map((p) => p.mirror(axis, centerX, centerY)).toList());
 
   /// Returns a new Path with the segments in reverse order.
   @useResult
@@ -98,7 +94,7 @@ class SubPath implements Operations<SubPath> {
     }
 
     if (isClosed) {
-      reversed.add(SvgClose());
+      reversed.add(const SvgClose());
     }
 
     assert(segments.length == reversed.length,
@@ -109,14 +105,12 @@ class SubPath implements Operations<SubPath> {
 
   @override
   bool operator ==(Object other) =>
-      other is SubPath && ListEquality().equals(segments, other.segments);
+      other is SubPath && const ListEquality().equals(segments, other.segments);
 
   @override
-  int get hashCode => ListEquality().hash(segments);
+  int get hashCode => const ListEquality().hash(segments);
 
   /// Returns the SubPath as a valid SVG path string.
   @override
-  String toString() {
-    return segments.map((s) => s.toString()).join(' ');
-  }
+  String toString() => segments.map((s) => s.toString()).join(' ');
 }
