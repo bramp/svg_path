@@ -1,6 +1,6 @@
 ## Features
 
-Pure data library for parsing and manipulating SVG paths.
+Pure dart library for parsing and manipulating SVG paths.
 
 * Parse
 * Translate
@@ -42,5 +42,3 @@ void main() {
 
 * All SVG commands are normalised to the absolute versions of moveTo, lineTo or
   curveTo. The resulting image is identical, but the path string may be longer.
-
-* Does not support sub-path strings (e.g 'M 10 10 L 20 20 Z   M 30 30 L 40 40 Z')

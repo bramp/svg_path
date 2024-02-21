@@ -1,7 +1,7 @@
 name: svg_path
 description: Library for manipulating SVG paths
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+version: 1.1.0
+repository: https://github.com/bramp/svg_path
 
 funding:
   - https://www.buymeacoffee.com/bramp
