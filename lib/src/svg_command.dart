@@ -12,6 +12,9 @@ String _formatNumber(double n) {
   return s;
 }
 
+bool _closeTo(double a, double b, {double epsilon = 1e-10}) =>
+    (a - b).abs() <= epsilon;
+
 /// Normalised SVG Commands
 /// That is limited to what dart:ui supports, and all coordinates are absolute.
 @immutable
@@ -90,7 +93,12 @@ class SvgMoveTo extends SvgCommand {
 
   @override
   bool operator ==(Object other) =>
-      other is SvgMoveTo && other.x == x && other.y == y;
+      // The _closeTo() check is to account for small floating point errors
+      // but by using it in operator== we techinincally violate the hashCode
+      // contract. As two values may be close to each other (and thus equal), but
+      // generate different hashcodes.
+      // This is a bug I'm willing to accept (for now).
+      other is SvgMoveTo && _closeTo(other.x, x) && _closeTo(other.y, y);
 
   @override
   int get hashCode => Object.hash(x, y);
@@ -131,7 +139,7 @@ class SvgLineTo extends SvgCommand {
 
   @override
   bool operator ==(Object other) =>
-      other is SvgLineTo && other.x == x && other.y == y;
+      other is SvgLineTo && _closeTo(other.x, x) && _closeTo(other.y, y);
 
   @override
   int get hashCode => Object.hash(x, y);
@@ -199,12 +207,12 @@ class SvgCubicTo extends SvgCommand {
   @override
   bool operator ==(Object other) =>
       other is SvgCubicTo &&
-      other.x1 == x1 &&
-      other.y1 == y1 &&
-      other.x2 == x2 &&
-      other.y2 == y2 &&
-      other.x3 == x3 &&
-      other.y3 == y3;
+      _closeTo(other.x1, x1) &&
+      _closeTo(other.y1, y1) &&
+      _closeTo(other.x2, x2) &&
+      _closeTo(other.y2, y2) &&
+      _closeTo(other.x3, x3) &&
+      _closeTo(other.y3, y3);
 
   @override
   int get hashCode => Object.hash(x1, y1, x2, y2, x3, y3);

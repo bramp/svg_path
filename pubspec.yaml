@@ -9,7 +9,6 @@ funding:
 environment:
   sdk: ">=3.3.0 <4.0.0"
 
-# Add regular dependencies here.
 dependencies:
   collection: ^1.18.0
   meta: ^1.10.0
