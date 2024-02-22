@@ -1,3 +1,7 @@
+## 1.1.4
+
+- Changed operator== to be approximate to account for floating point errors.
+
 ## 1.1.3
 
 - Added a scale() method.
