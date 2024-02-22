@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
-import 'math.dart';
 import 'operation.dart';
 import 'svg_command.dart';
 

@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import 'math.dart';
+enum Axis { x, y }
 
 abstract class Operations<T> {
   /// Returns a new [T] translated by x and y.

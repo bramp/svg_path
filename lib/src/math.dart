@@ -1,6 +1,6 @@
 import 'dart:math';
 
-enum Axis { x, y }
+import 'package:svg_path_transform/src/operation.dart';
 
 (double, double) rotatePoint(double x, double y, double radians,
     [double centerX = 0.0, double centerY = 0.0]) {

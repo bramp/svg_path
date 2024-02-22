@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:path_parsing/path_parsing.dart';
-import 'package:svg_path_transform/src/math.dart';
 import 'package:svg_path_transform/src/operation.dart';
 import 'package:svg_path_transform/src/path_builder.dart';
 import 'package:svg_path_transform/src/sub_path.dart';
