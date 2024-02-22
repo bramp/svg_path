@@ -1,7 +1,10 @@
+## 1.1.3
+
+- Added a scale() method.
+
 ## 1.1.2
 
 - Minor rearranging of exports.
-
 
 ## 1.1.1
 

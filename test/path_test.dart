@@ -335,6 +335,8 @@ void main() {
       ),
     ];
 
+    // TODO Add test for scale().
+
     //writeTestsToHTML(tests);
     for (final t in tests) {
       test(t.$1, () {

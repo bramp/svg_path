@@ -46,6 +46,10 @@ class SubPath implements Operations<SubPath> {
   SubPath mirror(Axis axis, [double centerX = 0.0, double centerY = 0.0]) =>
       SubPath(segments.map((p) => p.mirror(axis, centerX, centerY)).toList());
 
+  @override
+  SubPath scale(num scaleX, [num? scaleY]) =>
+      SubPath(segments.map((p) => p.scale(scaleX, scaleY ?? scaleX)).toList());
+
   /// Returns a new Path with the segments in reverse order.
   @useResult
   SubPath reverse() {

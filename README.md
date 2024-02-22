@@ -10,6 +10,7 @@ Pure dart library for parsing and manipulating SVG paths.
 * Translate the path
 * Rotate the path around a point
 * Mirror the path across an axis
+* Scale the path
 * Reverse (e.g clockwise to counter-clockwise)
 
 Does not depend on [Flutter](https://api.flutter.dev/index.html) or [dart:ui](https://api.flutter.dev/flutter/dart-ui/dart-ui-library.html), but these Path objects can easily be converted to dart:ui [Path objects](https://api.flutter.dev/flutter/dart-ui/Path-class.html).
@@ -39,11 +40,15 @@ void main() {
   // Mirror the path across the X axis.
   final p3 = path.mirror(Axis.x);
 
+  // Scale the path by 2 in the x direction, and 0.5 in the y direction.
+  final p4 = path.scale(2, 0.5);
+
   // Print out the paths as SVG path strings.
   print(p0.toString());
   print(p1.toString());
   print(p2.toString());
   print(p3.toString());
+  print(p4.toString());
 }
 ```
 

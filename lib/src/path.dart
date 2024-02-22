@@ -67,6 +67,10 @@ class Path implements Operations<Path> {
   Path translate(num x, num y) =>
       Path(subPaths.map((p) => p.translate(x, y)).toList());
 
+  @override
+  Path scale(num scaleX, [num? scaleY]) =>
+      Path(subPaths.map((p) => p.scale(scaleX, scaleY ?? scaleX)).toList());
+
   Path reverse() => Path(subPaths.reversed.map((p) => p.reverse()).toList());
 
   /// Joins two paths together. e.g

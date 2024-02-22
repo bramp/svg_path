@@ -3,7 +3,7 @@ import 'package:svg_path_transform/src/operation.dart';
 
 import 'math.dart';
 
-String formatNumber(double n) {
+String _formatNumber(double n) {
   // Two decimal places, and no trailing zeros.
   final s = n.toStringAsFixed(2);
   if (s.endsWith('.00')) {
@@ -37,6 +37,9 @@ class SvgClose extends SvgCommand {
   @override
   SvgClose mirror(Axis axis, [double centerX = 0.0, double centerY = 0.0]) =>
       this;
+
+  @override
+  SvgClose scale(num scaleX, [num? scaleY]) => this;
 
   @override
   String toString() => 'Z';
@@ -74,7 +77,13 @@ class SvgMoveTo extends SvgCommand {
   }
 
   @override
-  String toString() => 'M ${formatNumber(x)} ${formatNumber(y)}';
+  SvgMoveTo scale(num scaleX, [num? scaleY]) => SvgMoveTo(
+        x * scaleX,
+        y * (scaleY ?? scaleX),
+      );
+
+  @override
+  String toString() => 'M ${_formatNumber(x)} ${_formatNumber(y)}';
 
   @override
   (double, double) get end => (x, y);
@@ -109,7 +118,13 @@ class SvgLineTo extends SvgCommand {
   }
 
   @override
-  String toString() => 'L ${formatNumber(x)} ${formatNumber(y)}';
+  SvgLineTo scale(num scaleX, [num? scaleY]) => SvgLineTo(
+        x * scaleX,
+        y * (scaleY ?? scaleX),
+      );
+
+  @override
+  String toString() => 'L ${_formatNumber(x)} ${_formatNumber(y)}';
 
   @override
   (double, double) get end => (x, y);
@@ -163,10 +178,20 @@ class SvgCubicTo extends SvgCommand {
   }
 
   @override
+  SvgCubicTo scale(num scaleX, [num? scaleY]) => SvgCubicTo(
+        x1 * scaleX,
+        y1 * (scaleY ?? scaleX),
+        x2 * scaleX,
+        y2 * (scaleY ?? scaleX),
+        x3 * scaleX,
+        y3 * (scaleY ?? scaleX),
+      );
+
+  @override
   String toString() => 'C ' //
-      '${formatNumber(x1)} ${formatNumber(y1)}, ' //
-      '${formatNumber(x2)} ${formatNumber(y2)}, ' //
-      '${formatNumber(x3)} ${formatNumber(y3)}';
+      '${_formatNumber(x1)} ${_formatNumber(y1)}, ' //
+      '${_formatNumber(x2)} ${_formatNumber(y2)}, ' //
+      '${_formatNumber(x3)} ${_formatNumber(y3)}';
 
   @override
   (double, double) get end => (x3, y3);
