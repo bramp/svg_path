@@ -1,6 +1,11 @@
+## 1.1.2
+
+- Minor rearranging of exports.
+
+
 ## 1.1.1
 
-- Lint improvements
+- Lint improvements.
 
 ## 1.1.0
 
